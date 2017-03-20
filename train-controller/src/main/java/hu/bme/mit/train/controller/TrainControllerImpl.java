@@ -15,7 +15,7 @@ public class TrainControllerImpl extends TimerTask implements TrainController {
 	private Timer timer;
 	public TrainControllerImpl() {
 		timer = new Timer();
-		timer.scheduleAtFixedRate(this, 60, 60);
+		timer.scheduleAtFixedRate(this, 0, 1);
 
 	}
 	
