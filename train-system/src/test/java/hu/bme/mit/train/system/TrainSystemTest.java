@@ -16,6 +16,8 @@ public class TrainSystemTest {
 	TrainSensor sensor;
 	TrainUser user;
 	
+	Object note;
+	
 	@Before
 	public void before() {
 		TrainSystem system = new TrainSystem();
@@ -23,7 +25,8 @@ public class TrainSystemTest {
 		sensor = system.getSensor();
 		user = system.getUser();
 		
-		controller.addToMonitor(this);
+		note = new Object();
+		controller.addToMonitor(note);
 		
 		controller.startTimer();
 
@@ -61,33 +64,49 @@ public class TrainSystemTest {
 		
 		Assert.assertEquals(0, controller.getReferenceSpeed());
 		
-		this.wait(1);
+		synchronized (note) {
+			note.wait();
+		}
 		user.overrideJoystickPosition(1);
 		
-		this.wait(1);
+		synchronized (note) {
+			note.wait();
+		}
 		Assert.assertEquals(1, controller.getReferenceSpeed());
 
-		this.wait(1);
+		synchronized (note) {
+			note.wait();
+		}
 		Assert.assertEquals(2, controller.getReferenceSpeed());
 		
-		this.wait(1);
+		synchronized (note) {
+			note.wait();
+		}
 		Assert.assertEquals(2, controller.getReferenceSpeed());
 		
 		user.overrideJoystickPosition(0);
 
-		this.wait(1);
+		synchronized (note) {
+			note.wait();
+		}
 		Assert.assertEquals(2, controller.getReferenceSpeed());
 		
-		this.wait(1);
+		synchronized (note) {
+			note.wait();
+		}
 		Assert.assertEquals(2, controller.getReferenceSpeed());
 		
 		user.overrideJoystickPosition(-1);
 		
-		this.wait(1);
+		synchronized (note) {
+			note.wait();
+		}
 		Assert.assertEquals(1, controller.getReferenceSpeed());
 		user.overrideJoystickPosition(0);
 		
-		this.wait(1);
+		synchronized (note) {
+			note.wait();
+		}
 		Assert.assertEquals(1, controller.getReferenceSpeed());
 		
 	}

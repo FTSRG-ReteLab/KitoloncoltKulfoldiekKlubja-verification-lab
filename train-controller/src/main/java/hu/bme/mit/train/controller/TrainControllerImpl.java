@@ -13,7 +13,7 @@ public class TrainControllerImpl implements TrainController {
 	private int speedLimit = 0;
 	private boolean run;
 	
-	private List<Object> notify;
+	private Object notify;
 	
 	public TrainControllerImpl() {
 		notify = Collections.synchronizedList(new ArrayList<Object>());
@@ -62,6 +62,11 @@ public class TrainControllerImpl implements TrainController {
 	private synchronized void tick() {
 		System.out.println("Tick");
 		followSpeed();
+		
+		synchronized (notify) {
+			if(notify != null) notify.notify();
+		}
+		
 	}
 
 	@Override
@@ -89,7 +94,7 @@ public class TrainControllerImpl implements TrainController {
 
 	@Override
 	public void addToMonitor(Object me) {
-		notify.add(me);
+		notify = me;
 		
 	}
 
