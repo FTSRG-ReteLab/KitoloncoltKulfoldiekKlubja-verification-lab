@@ -62,12 +62,6 @@ public class TrainControllerImpl implements TrainController {
 	private synchronized void tick() {
 		System.out.println("Tick");
 		followSpeed();
-		
-		synchronized(notify) {
-			for(Object obj: notify) {
-				//obj.notify();
-			}
-		}
 	}
 
 	@Override
