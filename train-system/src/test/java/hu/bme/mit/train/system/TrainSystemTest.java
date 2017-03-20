@@ -28,26 +28,33 @@ public class TrainSystemTest {
 	@Test
 	public void OverridingJoystickPosition_IncreasesReferenceSpeed() {
 		sensor.overrideSpeedLimit(10);
-
 		Assert.assertEquals(0, controller.getReferenceSpeed());
+		try {
+			user.overrideJoystickPosition(5);
+			this.wait(1);
+			Assert.assertEquals(5, controller.getReferenceSpeed());
+			this.wait(1);
+			Assert.assertEquals(10, controller.getReferenceSpeed());
+			this.wait(1);
+			Assert.assertEquals(10, controller.getReferenceSpeed());
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
 		
-		user.overrideJoystickPosition(5);
-
-		controller.followSpeed();
-		Assert.assertEquals(5, controller.getReferenceSpeed());
-		controller.followSpeed();
-		Assert.assertEquals(10, controller.getReferenceSpeed());
-		controller.followSpeed();
-		Assert.assertEquals(10, controller.getReferenceSpeed());
 	}
 
 	@Test
 	public void OverridingJoystickPositionToNegative_SetsReferenceSpeedToZero() {
-		user.overrideJoystickPosition(4);
-		controller.followSpeed();
-		user.overrideJoystickPosition(-5);
-		controller.followSpeed();
-		Assert.assertEquals(0, controller.getReferenceSpeed());
+		try {
+			user.overrideJoystickPosition(4);
+			this.wait(1);
+			user.overrideJoystickPosition(-5);
+			this.wait(1);
+			Assert.assertEquals(0, controller.getReferenceSpeed());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	
