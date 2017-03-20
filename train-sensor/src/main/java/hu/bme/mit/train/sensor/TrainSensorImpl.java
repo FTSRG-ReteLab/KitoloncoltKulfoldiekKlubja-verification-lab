@@ -27,9 +27,13 @@ public class TrainSensorImpl implements TrainSensor {
 		this.speedLimit = speedLimit;
 		controller.setSpeedLimit(speedLimit);
 		
+		
+	}
+	
+	public void checkAlarmState() {
 		if(controller.getReferenceSpeed() < 0 || controller.getReferenceSpeed() > 500) {
 			alarmState = true;
-		} else if(controller.getReferenceSpeed() > speedLimit * 2) {
+		} else if(controller.getReferenceSpeed() * 2 < speedLimit) {
 			alarmState = true;
 		} else {
 			alarmState = false;
@@ -38,6 +42,7 @@ public class TrainSensorImpl implements TrainSensor {
 
 	@Override
 	public boolean getAlarmState() {
+		checkAlarmState();
 		return alarmState;
 	}
 
